@@ -12,7 +12,7 @@
     xmlns:icons="using:Fluent.Icons" 
     xmlns:toolkitcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls" 
     xmlns:materials="using:Mica.Materials"
-    controls:BackdropMaterial.ApplyToRootOrPageBackground="True">
+    controls:BackdropMaterial.ApplyToRootOrPageBackground="False">
     <Grid IsDoubleTapEnabled="True" DoubleTapped="Grid_DoubleTapped" RightTapped="Grid_RightTapped">
         <Grid x:Name="AppTitleBar"
                 IsHitTestVisible="True"
