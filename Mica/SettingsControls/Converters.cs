@@ -4,7 +4,7 @@ using Windows.UI.Xaml.Data;
 
 #nullable enable
 
-namespace Mica.SettingsControls
+namespace REDACTED.SettingsControls
 {
     /// <summary>
     /// The generic base implementation of a value converter.

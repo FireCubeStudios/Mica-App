@@ -2,7 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
-namespace Mica.SettingsControls
+namespace REDACTED.SettingsControls
 {
     [ContentProperty(Name = nameof(SettingsActionableElement))]
     public sealed partial class SettingsBlockControl : UserControl

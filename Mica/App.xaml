@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Mica.App"
+    x:Class="REDACTED.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Mica"
+    xmlns:local="using:REDACTED"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls" 
     xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" 

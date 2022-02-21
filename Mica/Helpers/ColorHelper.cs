@@ -1,6 +1,6 @@
 ﻿using Windows.UI;
 
-namespace Mica.Helpers
+namespace REDACTED.Helpers
 {
     class ColorHelper
     {

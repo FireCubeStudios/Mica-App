@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
-namespace Mica
+namespace REDACTED
 {
     public sealed partial class MainPage : Page
     {
