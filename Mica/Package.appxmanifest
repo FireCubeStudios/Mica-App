@@ -35,6 +35,13 @@
       desktop4:SupportsMultipleInstances="true"
 	    iot2:SupportsMultipleInstances="true"
       EntryPoint="Mica.App">
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="mica">
+            <uap:DisplayName>Mica</uap:DisplayName>
+          </uap:Protocol>
+        </uap:Extension>
+      </Extensions>
       <uap:VisualElements
         DisplayName="Mica™️"
         Square150x150Logo="Assets\Square150x150Logo.png"

@@ -11,7 +11,7 @@
     xmlns:settings="using:Mica.SettingsControls" 
     xmlns:icons="using:Fluent.Icons" 
     xmlns:toolkitcontrols="using:Microsoft.Toolkit.Uwp.UI.Controls" 
-    xmlns:materials="using:Mica.Materials"
+    xmlns:materials="using:Mica.Materials" xmlns:tenmica="using:TenMica"
     controls:BackdropMaterial.ApplyToRootOrPageBackground="True">
     <Grid IsDoubleTapEnabled="True" DoubleTapped="Grid_DoubleTapped" RightTapped="Grid_RightTapped">
         <Grid x:Name="AppTitleBar"
@@ -25,7 +25,7 @@
 	Subtitle="Control opacity, colour or add extra effects by double tapping"
 	PreferredPlacement="TopRight"
 	PlacementMargin="20"
-	IsLightDismissEnabled="False" Background="{ThemeResource MicaBrush}" BorderBrush="{ThemeResource MicaBorderBrush}"
+	IsLightDismissEnabled="False" Background="{ThemeResource MicaBlurBrush}" BorderBrush="{ThemeResource MicaBorderBrush}"
 	ActionButtonClick="Tip_ActionButtonClick"
 	ActionButtonContent="Go to settings now"
 	CloseButtonContent="Got it!">
@@ -37,12 +37,24 @@
                 <TextBlock FontSize="24" FontWeight="SemiBold" Margin="4, 4, 4, 24">Mica™️</TextBlock>
                     <TextBlock FontSize="14" FontWeight="SemiBold" Margin="4">Mica personalization</TextBlock>
                     <settings:SettingsBlockControl Title="Mica theme" Margin="2" Description="Toggle Mica theme">
-                    <settings:SettingsBlockControl.Icon>
-                        <icons:FluentIconElement VerticalAlignment="Center" Symbol="DarkTheme24"/>
-                    </settings:SettingsBlockControl.Icon>
+                        <settings:SettingsBlockControl.Icon>
+                            <icons:FluentIconElement VerticalAlignment="Center" Symbol="DarkTheme24"/>
+                        </settings:SettingsBlockControl.Icon>
                         <ToggleSwitch x:Name="ThemeSwitch" Style="{ThemeResource ThemeSwitch}" IsOn="True" Toggled="ThemeSwitch_Toggled" OnContent="Dark" HorizontalAlignment="Right" OffContent="Light"/>
-                </settings:SettingsBlockControl>
-                <settings:SettingsBlockControl Title="Mica opacity" Margin="2" Description="Adjust Mica opacity">
+                    </settings:SettingsBlockControl>
+                    <settings:SettingsBlockControl x:Name="InfiniteMicaSetting" Title="Toggle Infinite Mica" Margin="2" Description="Enables Mica when app is unfocused">
+                        <settings:SettingsBlockControl.Icon>
+                            <icons:FluentIconElement VerticalAlignment="Center" Symbol="Premium24"/>
+                        </settings:SettingsBlockControl.Icon>
+                        <ToggleSwitch x:Name="InfiniteSwitch" Toggled="InfiniteSwitch_Toggled" IsOn="True" Style="{ThemeResource GlowSwitch}" OnContent="On" HorizontalAlignment="Right" OffContent="Off"/>
+                    </settings:SettingsBlockControl>
+                    <settings:SettingsBlockControl Title="Open new Mica window" Margin="2" Description="Open another sheet of Mica">
+                        <settings:SettingsBlockControl.Icon>
+                            <icons:FluentIconElement VerticalAlignment="Center" Symbol="WindowNew24"/>
+                        </settings:SettingsBlockControl.Icon>
+                        <Button Click="NewMica_Click" Width="150" Style="{ThemeResource ToolbarButton}" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">Launch</Button>
+                    </settings:SettingsBlockControl>
+                    <settings:SettingsBlockControl Title="Mica opacity" Margin="2" Description="Adjust Mica opacity">
                     <settings:SettingsBlockControl.Icon>
                         <icons:FluentIconElement VerticalAlignment="Center" Symbol="Lightbulb24"/>
                     </settings:SettingsBlockControl.Icon>
@@ -82,36 +94,51 @@
                 <TextBlock FontSize="14" FontWeight="SemiBold" Margin="4, 24, 4, 4">Effects personalization</TextBlock>
                 <settings:SettingsBlockControl Title="Aurora" Margin="2" Description="Toggle Aurora effect">
                     <settings:SettingsBlockControl.Icon>
-                        <icons:FluentIconElement VerticalAlignment="Center" Symbol="WeatherMoon24"/>
+                            <icons:FluentIconElement VerticalAlignment="Center" Foreground="Lavender" Symbol="WeatherMoon24"/>
                     </settings:SettingsBlockControl.Icon>
                         <ToggleSwitch x:Name="AuroraSwitch" IsOn="False" Style="{ThemeResource GlowSwitch}" OnContent="On" HorizontalAlignment="Right" OffContent="Off"/>
                 </settings:SettingsBlockControl>
                 <settings:SettingsBlockControl Title="Bloom" Margin="2" Description="Toggle Bloom effect">
                     <settings:SettingsBlockControl.Icon>
-                        <icons:FluentIconElement VerticalAlignment="Center" Symbol="Balloon24"/>
+                            <icons:FluentIconElement VerticalAlignment="Center" Foreground="LightBlue" Symbol="Balloon24"/>
                     </settings:SettingsBlockControl.Icon>
                     <ToggleSwitch x:Name="BloomSwitch" IsOn="False" Style="{ThemeResource GlowSwitch}" OnContent="On" HorizontalAlignment="Right" OffContent="Off"/>
                 </settings:SettingsBlockControl>
-            </StackPanel>
+                    <settings:SettingsBlockControl Title="Red Bloom" Margin="2" Description="Toggle Red Bloom effect">
+                        <settings:SettingsBlockControl.Icon>
+                            <icons:FluentIconElement VerticalAlignment="Center" Foreground="LightCoral" Symbol="Balloon24"/>
+                        </settings:SettingsBlockControl.Icon>
+                        <ToggleSwitch x:Name="RedBloomSwitch" IsOn="False" Style="{ThemeResource GlowSwitch}" OnContent="On" HorizontalAlignment="Right" OffContent="Off"/>
+                    </settings:SettingsBlockControl>
+                </StackPanel>
 
             <StackPanel Margin="100, 100, 50, 100" Width="200" x:Name="AboutPanel" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <TextBlock FontSize="14" FontWeight="SemiBold" Margin="4, 4, 4, 8">About this app</TextBlock>
                 <TextBlock FontSize="14" Margin="4, 4, 4, 0">Mica™️ 1.1.x.0</TextBlock>
                     <TextBlock FontSize="14" Margin="4, 0, 4, 0" TextWrapping="WrapWholeWords">Developed by FireCubeStudios</TextBlock>
-                    <TextBlock FontSize="14" Margin="4, 0, 4, 8" TextWrapping="WrapWholeWords"> Icon by josephbeattiee</TextBlock>
+                    <TextBlock FontSize="14" Margin="4, 0, 4, 0" TextWrapping="WrapWholeWords"> Icon by josephbeattiee</TextBlock>
+                    <TextBlock FontSize="14" Margin="4, 0, 4, 8" TextWrapping="WrapWholeWords">10Mica by Ahmed Walid</TextBlock>
                     <HyperlinkButton Margin="4" NavigateUri="https://twitter.com/FireCubeStudios">Follow me on Twitter</HyperlinkButton>
-                    <HyperlinkButton Margin="4" NavigateUri="https://discord.gg/BxPPCBW7zC">Join Fluent Design Hub</HyperlinkButton>
+                    <HyperlinkButton Margin="4" NavigateUri="https://discord.com/invite/87qnqRB">Join FireCubeStudios server</HyperlinkButton>
                     <HyperlinkButton Margin="4" NavigateUri="https://github.com/FireCubeStudios/Mica-App">GitHub repository</HyperlinkButton>
-                    <Button Click="Button_Click" Margin="4,12,4,8" Width="150">Help</Button>
+                    <Button Click="Button_Click" Margin="4,12,4,8" Width="150" Style="{ThemeResource ToolbarButton}" BorderThickness="1" BorderBrush="{ThemeResource MicaBorderBrush}">Help</Button>
+                    <HyperlinkButton Margin="4" NavigateUri="ms-windows-store://pdp/?productid=9PHF4S5SJJG3">Get Acrylic™️</HyperlinkButton>
+                    <HyperlinkButton Margin="4" NavigateUri="ms-windows-store://pdp/?productid=9PNTW3WL9SRQ">Get Tabbed™️</HyperlinkButton>
                 </StackPanel>
         </Grid>
         </ScrollViewer>
+        <Grid x:Name="Mica">
+            <Grid.Background>
+                <tenmica:TenMicaBrush x:Name="Mica10" EnabledInActivatedNotForeground="True" ForcedTheme="Dark" IsThemeForced="True"/>
+            </Grid.Background>
+        </Grid>
         <Grid x:Name="OpacityGrid" Opacity="{x:Bind OpacitySlider.Value, Mode=OneWay}" Background="{ThemeResource 24Brush}" Canvas.ZIndex="5"/>
         <Grid x:Name="ColorOpacityGrid" x:Load="{x:Bind ColorSwitch.IsOn, Mode=OneWay}" Opacity="{x:Bind ColorOpacitySlider.Value, Mode=OneWay}" Canvas.ZIndex="10">
             <Grid.Background>
                 <SolidColorBrush Color="{x:Bind ColorPicker.Color, Mode=OneWay}"/>
             </Grid.Background>
         </Grid>
+        <materials:RedBloomView x:Name="RedBloom" DoubleTapped="Grid_DoubleTapped" x:Load="{x:Bind RedBloomSwitch.IsOn, Mode=OneWay}" Canvas.ZIndex="75"/>
         <materials:BloomView x:Name="Bloom" DoubleTapped="Grid_DoubleTapped" x:Load="{x:Bind BloomSwitch.IsOn, Mode=OneWay}" Canvas.ZIndex="75"/>
         <materials:AuroraLite x:Name="Aurora" DoubleTapped="Grid_DoubleTapped" Canvas.ZIndex="50" x:Load="{x:Bind AuroraSwitch.IsOn, Mode=OneWay}"/>
     </Grid>

@@ -7,8 +7,10 @@
     xmlns:ToolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives" 
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
-    xmlns:contract7Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,7)"
-    xmlns:contract7NotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractNotPresent(Windows.Foundation.UniversalApiContract,7)" xmlns:icons="using:Fluent.Icons">
+    xmlns:icons="using:Fluent.Icons"
+    xmlns:mica="using:MicaForUWP.Media"
+    xmlns:media="using:Microsoft.Toolkit.Uwp.UI.Media"
+    xmlns:brushes="using:Mica.Brushes">
     <Application.Resources>
         <controls:XamlControlsResources>
             <controls:XamlControlsResources.MergedDictionaries>
@@ -93,6 +95,74 @@
                             <SolidColorBrush x:Key="BorderHighContrastBrush" Color="{ThemeResource SystemColorButtonTextColor}" />
                         </ResourceDictionary>
                     </ResourceDictionary.ThemeDictionaries>
+                    <media:BackdropBlurBrush x:Key="MicaBlurBrush" Amount="240"/>
+                    <mica:BackdropMicaBrush x:Key="MicaElementBrush" BackgroundSource="Backdrop"/>
+                    <mica:BackdropMicaBrush x:Key="MicaWindowBrush" BackgroundSource="HostBackdrop"/>
+                    <mica:BackdropMicaBrush x:Key="MicaWallpaperBrush" BackgroundSource="WallpaperBackdrop"/>
+                     <brushes:MicaAltBrush x:Key="MicaAltBrush"/>
+                    <Style x:Key="ListActionContainer" TargetType="ListViewItem">
+                        <Setter Property="Margin" Value="4, 0, 4, 0" />
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="CornerRadius" Value="4" />
+                        <Setter Property="MinWidth" Value="0" />
+                        <Setter Property="MinHeight" Value="0" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <Grid Width="44" Height="32" Padding="{TemplateBinding Padding}" CornerRadius="{TemplateBinding CornerRadius}">
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualState x:Name="Normal">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" EnableDependentAnimation="True" Duration="0:0:0.12" To="1"/>
+                                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX" EnableDependentAnimation="True" Duration="0:0:0.12" To="1"/>
+                                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="0"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="PointerOver">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" EnableDependentAnimation="True" Duration="0:0:0.12" To="1.08"/>
+                                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX" EnableDependentAnimation="True" Duration="0:0:0.12" To="1.08"/>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPointerOver}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="12"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleY" EnableDependentAnimation="True" Duration="0:0:0.12" To="0.92"/>
+                                                        <DoubleAnimation Storyboard.TargetName="ContentScale" Storyboard.TargetProperty="ScaleX" EnableDependentAnimation="True" Duration="0:0:0.12" To="0.92"/>
+                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentControl" Storyboard.TargetProperty="Background">
+                                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ToggleButtonBackgroundPressed}" />
+                                                        </ObjectAnimationUsingKeyFrames>
+                                                        <DoubleAnimation Storyboard.TargetName="Pipe" Storyboard.TargetProperty="Width" EnableDependentAnimation="True" Duration="0:0:0.12" To="8"/>
+                                                    </Storyboard>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <ContentPresenter x:Name="ContentControl" Foreground="{TemplateBinding Foreground}" RenderTransformOrigin="0.5, 0.5" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}">
+                                            <ContentPresenter.RenderTransform>
+                                                <ScaleTransform x:Name="ContentScale" ScaleX="1" ScaleY="1"/>
+                                            </ContentPresenter.RenderTransform>
+                                        </ContentPresenter>
+                                        <ToolkitControls:DropShadowPanel Margin="2,0,0,2" x:Name="Glow" Color="{ThemeResource SystemAccentColorLight2}" ShadowOpacity="0.93" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                            <Grid x:Name="Pipe"
+                                                Height="2" Width="0.1" CornerRadius="2">
+                                                <Grid.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="0.0" />
+                                                        <GradientStop Color="{ThemeResource SystemAccentColorLight2}" Offset="0.5" />
+                                                        <GradientStop Color="{ThemeResource SystemAccentColorLight3}" Offset="1.0" />
+                                                    </LinearGradientBrush>
+                                                </Grid.Background>
+                                            </Grid>
+                                        </ToolkitControls:DropShadowPanel>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
                     <Style TargetType="ToggleSplitButton" BasedOn="{StaticResource GlowSplitButtonStyle}" />
                     <Style TargetType="RadioButton">
                         <Setter Property="Background" Value="{ThemeResource RadioButtonBackground}" />

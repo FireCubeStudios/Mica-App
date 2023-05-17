@@ -1,5 +1,7 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using Windows.ApplicationModel.Core;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -19,7 +21,8 @@ namespace Mica
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(AppTitleBar);
-            Tip.IsOpen = SystemInformation.Instance.IsFirstRun ? true : false; ;
+            Tip.IsOpen = SystemInformation.Instance.IsFirstRun ? true : false;
+            InfiniteMicaSetting.Visibility = IsWin11() ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ThemeSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -27,6 +30,8 @@ namespace Mica
             if (Window.Current.Content is FrameworkElement frameworkElement)
             {
                 frameworkElement.RequestedTheme = ThemeSwitch.IsOn ? ElementTheme.Dark : ElementTheme.Light;
+                if(Mica10 is not null)
+                    Mica10.ForcedTheme = ThemeSwitch.IsOn ? ApplicationTheme.Dark : ApplicationTheme.Light;
             }
         }
 
@@ -62,6 +67,22 @@ namespace Mica
             Gs1.Color = Helpers.ColorHelper.ChangeColorBrightness(sender.Color, 0.25f);
             Gs0.Color = Helpers.ColorHelper.ChangeColorBrightness(sender.Color, 0.02f);
             Glow.Color = sender.Color;
-        }   
+        }
+
+        private async void NewMica_Click(object sender, RoutedEventArgs e) => await Launcher.LaunchUriAsync(new Uri("mica:"));
+
+        public bool IsWin11() => (Environment.OSVersion.Version.Build >= 22000);
+
+        private void InfiniteSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (Mica is not null)
+                Mica.Visibility = InfiniteSwitch.IsOn ? Visibility.Visible : Visibility.Collapsed;
+            if (Window.Current.Content is FrameworkElement frameworkElement)
+            {
+                frameworkElement.RequestedTheme = ThemeSwitch.IsOn ? ElementTheme.Dark : ElementTheme.Light;
+                if (Mica10 is not null)
+                    Mica10.ForcedTheme = ThemeSwitch.IsOn ? ApplicationTheme.Dark : ApplicationTheme.Light;
+            }
+        }
     }
 }
