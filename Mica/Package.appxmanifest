@@ -11,7 +11,7 @@
   <Identity
     Name="2505FireCubeStudios.Mica"
     Publisher="CN=3C7C8FC9-7104-4B33-8730-EE1E929D5D3B"
-    Version="1.0.3.0" />
+    Version="2.0.6.0" />
 
   <mp:PhoneIdentity PhoneProductId="c7a06a71-4c56-4d16-a98a-4841479fca32" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
